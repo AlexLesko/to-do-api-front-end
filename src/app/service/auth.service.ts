@@ -18,4 +18,8 @@ export class AuthService {
   public registerUser(userRegister: UserRegisterModel) : Observable<UserModel> {
     return this.http.post<UserModel>(`${environment.apiUrl}/${this.baseUrl}/Register`, userRegister);
   }
+
+  public loginUser(userRequest: UserAuthModel) : Observable<UserModel> {
+    return this.http.post<UserModel>(`${environment.apiUrl}/${this.baseUrl}/Login`, userRequest);
+  }
 }

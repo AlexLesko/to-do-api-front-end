@@ -1,4 +1,11 @@
-<button class="btn btn-primary btn-lg" style="margin: 1em;" (click)="createNewUser()">CreateNewUser</button>
+<button class="btn btn-primary btn-lg" style="margin: 1em;" (click)="createNewUser()" hidden>CreateNewUser</button>
+
+<div class="d-flex">
+    <h2 class="d-flex">Welcome {{user.name}}</h2>
+    <button (click)="logout()" class="btn btn-danger d-flex justify-self-end">
+        Logout
+    </button>
+</div>
 
 <table class="table table-striped" >
   <thead>

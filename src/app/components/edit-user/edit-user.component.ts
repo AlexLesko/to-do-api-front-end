@@ -22,13 +22,8 @@ export class EditUserComponent {
     this.userService.saveUser(user).subscribe((users: UserModel[]) => this.passDataAndClose(users))
   }
 
-  createUser(user: UserModel) {
-    console.log(user);
-    this.userService.createUser(user).subscribe((users: UserModel[]) => this.passDataAndClose(users));
-  }
-
   deleteUser(user: UserModel) {
-    this.userService.deleteUser(user).subscribe((users: UserModel[]) => this.passDataAndClose(users))
+    this.userService.deleteUser(this.user!.name, user).subscribe((users: UserModel[]) => this.passDataAndClose(users))
   }
 
   passDataAndClose(users: any) {

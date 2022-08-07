@@ -13,36 +13,28 @@ export class UserService {
   constructor(private http: HttpClient) { }
   private baseUrl = "User"
 
-  public getUsers() : Observable<UserModel[]> {
-    return this.http.get<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}`);
-  }
-
   public getFilteredUser(user: UserModel) : Observable<UserModel[]> {
-    return this.http.get<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}/Filtered`);
+    return this.http.post<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}/Filtered`, user);
   }
 
   public saveUser(user: UserModel) : Observable<UserModel[]> {
-    return this.http.put<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}`, user);
+    return this.http.put<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}/${user.name}`, user);
+  }
+  
+  public deleteUser(loggedUser: string, user: UserModel) : Observable<UserModel[]> {
+    return this.http.delete<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}/${loggedUser}/${user.id}`);
   }
 
-  public createUser(user: UserModel) : Observable<UserModel[]> {
-    return this.http.post<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}/CreateUser`, user);
+  public saveTask(user: UserModel, task: ToDoModel) : Observable<UserModel[]> {
+    return this.http.put<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}/UpdateTask/${user.name}`, task);
   }
 
-  public deleteUser(user: UserModel) : Observable<UserModel[]> {
-    return this.http.delete<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}/${user.id}`);
+  public createTask(user: UserModel, task: ToDoModel) : Observable<UserModel[]> {
+    return this.http.post<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}/AddTask/${user.name}`, task);
   }
 
-  public saveTask(task: ToDoModel) : Observable<UserModel[]> {
-    return this.http.put<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}/UpdateTask`, task);
-  }
-
-  public createTask(task: ToDoModel) : Observable<UserModel[]> {
-    return this.http.post<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}/AddTask`, task);
-  }
-
-  public deleteTask(task: ToDoModel) : Observable<UserModel[]> {
-    return this.http.delete<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}/DeleteTask/${task.id}`);
+  public deleteTask(user: UserModel, task: ToDoModel) : Observable<UserModel[]> {
+    return this.http.delete<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}/DeleteTask/${user.name}/${task.id}`);
   }
 
 }

@@ -17,10 +17,12 @@ export class EditUserModelComponent implements OnInit {
   taskToModify : ToDoModel = new ToDoModel();
   openEditWindow : boolean = false;
   users : UserModel[] = [];
+  loggedUser : UserModel = new UserModel();
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: {userModel: UserModel},private userService: UserService, private dialogRef: MatDialogRef<EditUserModelComponent>) { 
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {userModel: UserModel, loggedUser: UserModel},private userService: UserService, private dialogRef: MatDialogRef<EditUserModelComponent>) { 
     this.user = data.userModel;
     this.taskList = data.userModel.toDoList;
+    this.loggedUser = data.loggedUser;
   }
 
   ngOnInit(): void {}
@@ -32,7 +34,7 @@ export class EditUserModelComponent implements OnInit {
   }
 
   CreateTask() {
-    this.userService.createTask(this.taskToModify).subscribe((updatedUser: UserModel[]) => {
+    this.userService.createTask(this.loggedUser, this.taskToModify).subscribe((updatedUser: UserModel[]) => {
       this.user = updatedUser.find(x => x.id == this.user?.id);
       this.taskList = this.user?.toDoList;
       this.users = updatedUser;
@@ -48,7 +50,7 @@ export class EditUserModelComponent implements OnInit {
   SaveTask(task: ToDoModel) {
     this.taskToModify = task;
 
-    this.userService.saveTask(this.taskToModify).subscribe((updatedUser: UserModel[]) => {
+    this.userService.saveTask(this.loggedUser, this.taskToModify).subscribe((updatedUser: UserModel[]) => {
       this.user = updatedUser.find(x => x.id == this.user?.id);
       this.taskList = this.user?.toDoList;
       this.users = updatedUser;
@@ -64,7 +66,7 @@ export class EditUserModelComponent implements OnInit {
   DeleteTask(task: ToDoModel) {
     this.taskToModify = task;
 
-    this.userService.deleteTask(this.taskToModify).subscribe((updatedUser: UserModel[]) => {
+    this.userService.deleteTask(this.loggedUser, this.taskToModify).subscribe((updatedUser: UserModel[]) => {
       this.user = updatedUser.find(x => x.id == this.user?.id);
       this.taskList = this.user?.toDoList;
       this.users = updatedUser;

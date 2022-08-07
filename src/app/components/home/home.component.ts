@@ -22,17 +22,25 @@ export class HomeComponent implements OnInit {
     if(routerData)
     {
       this.user = routerData as UserModel;
-      userModelService.getFilteredUser(this.user).subscribe(result => this.users = result);
+      userModelService.getFilteredUser(this.user).subscribe(result => {console.log(result);this.users = result;});
+    }
+    else
+    {
+      this.router.navigate(['login']);
     }
   }
 
-  ngOnInit() : void {
-    this.userModelService.getUsers().subscribe((result: UserModel[]) => {(this.users = result)});
-  }
+  ngOnInit() : void {}
 
   updateUserList(users: UserModel[]) {
     this.users = users;
   }
+
+  logout()
+  {
+    this.router.navigate(['login']);
+  }
+  
 
   createNewUser() {
     this.userToEdit = new UserModel();
@@ -63,18 +71,27 @@ export class HomeComponent implements OnInit {
   }
 
   deleteUser(user: UserModel) {
-    this.userModelService.deleteUser(user).subscribe((result: UserModel[]) => (this.users = result));
+    this.userModelService.deleteUser(this.user.name ,user).subscribe((result: UserModel[]) => {
+      if(result != null)
+      {
+        this.users = result;
+      }
+      else
+      {
+        this.router.navigate(['login']);
+      }
+    });
   }
 
   openUserModel(user: UserModel) {
     const dialogConfig = new MatDialogConfig();
 
     let dialogRef = this.matDialog.open(EditUserModelComponent, {
-      width: '50%', data: {userModel: user}
+      width: '50%', data: {userModel: user, loggedUser: this.user}
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      this.userModelService.getUsers().subscribe((result: UserModel[]) => this.users = result);
+      this.userModelService.getFilteredUser(this.user).subscribe((result: UserModel[]) => this.users = result);
     })
   }
 

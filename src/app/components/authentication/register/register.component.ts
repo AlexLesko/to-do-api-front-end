@@ -52,8 +52,6 @@ export class RegisterComponent implements OnInit {
     userRegister.users = user;
     userRegister.userRequest = userAuth;
 
-    console.log(userRegister);
-
     this.authService.registerUser(userRegister).subscribe(data => this.router.navigateByUrl('/home', {state: data}));
     
   }
@@ -65,6 +63,11 @@ export class RegisterComponent implements OnInit {
       reader.onload = () => resolve(reader.result);
       reader.onerror = error => reject(error);
     });
+  }
+
+  goToLogin()
+  {
+    this.router.navigate(['login']);
   }
 
 }
