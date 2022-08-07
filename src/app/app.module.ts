@@ -6,21 +6,30 @@ import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from "@angular/materia
 import { AppComponent } from './app.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { EditUserModelComponent } from './components/edit-user-model/edit-user-model.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RegisterComponent } from './components/authentication/register/register.component';
+import { LoginComponent } from './components/authentication/login/login.component';
+import { AppRoutingModule } from './app-routing.module';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EditUserComponent,
-    EditUserModelComponent
+    EditUserModelComponent,
+    RegisterComponent,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     MatDialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AppRoutingModule
   ],
   providers: [{ provide: MAT_DIALOG_DATA, useValue: {} },
               { provide: MatDialogRef, useValue: {} }

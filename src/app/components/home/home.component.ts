@@ -1,26 +1,33 @@
-import { Component } from '@angular/core';
-import { UserModel } from './models/user-model';
-import { UserService } from './service/user.service';
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import { EditUserComponent } from './components/edit-user/edit-user.component';
-import { EditUserModelComponent } from './components/edit-user-model/edit-user-model.component';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { UserModel } from 'src/app/models/user-model';
+import { UserService } from 'src/app/service/user.service';
+import { EditUserModelComponent } from '../edit-user-model/edit-user-model.component';
+import { EditUserComponent } from '../edit-user/edit-user.component';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
-export class AppComponent {
-
-
+export class HomeComponent implements OnInit {
+  user : UserModel = new UserModel();
   title = 'to-do-api-front-end';
-  /*users: UserModel[] = [];
+  users: UserModel[] = [];
   userToEdit?: UserModel;
 
-  constructor(private userModelService: UserService, private matDialog: MatDialog) {}
+  constructor(private router: Router, private userModelService: UserService, private matDialog: MatDialog) {
+    let routerData = this.router.getCurrentNavigation()?.extras.state;
+    if(routerData)
+    {
+      this.user = routerData as UserModel;
+      userModelService.getFilteredUser(this.user).subscribe(result => this.users = result);
+    }
+  }
 
   ngOnInit() : void {
-    this.userModelService.getUsers().subscribe((result: UserModel[]) => {(this.users = result);console.log(result)});
+    this.userModelService.getUsers().subscribe((result: UserModel[]) => {(this.users = result)});
   }
 
   updateUserList(users: UserModel[]) {
@@ -69,6 +76,6 @@ export class AppComponent {
     dialogRef.afterClosed().subscribe(() => {
       this.userModelService.getUsers().subscribe((result: UserModel[]) => this.users = result);
     })
-  } */
+  }
 
 }

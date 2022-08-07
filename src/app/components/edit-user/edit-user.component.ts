@@ -36,22 +36,13 @@ export class EditUserComponent {
   }
 
   onFileSelected(event: any) {
-    console.log(event);
-
     const file : File = event.target.files[0];
 
     if(file)
     {
       this.user!.imageTitle = file.name;
       console.log(file);
-      let reader = new FileReader();
-      let result = reader.readAsArrayBuffer(file);
-      let result2 = file.arrayBuffer();
-
-      let result3 = this.GetBase64Array(file).then(data => this.user!.imageData = data)//this.GetByteArray(data)).then(result => {this.user!.imageData = result; console.log(this.user)});
-
-      
-
+      this.GetBase64Array(file).then(data => this.user!.imageData = data);
     }
   }
 

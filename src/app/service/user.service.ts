@@ -17,8 +17,8 @@ export class UserService {
     return this.http.get<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}`);
   }
 
-  public getSingleUser(user: UserModel) : Observable<UserModel[]> {
-    return this.http.get<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}/${user.id}`);
+  public getFilteredUser(user: UserModel) : Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(`${environment.apiUrl}/${this.baseUrl}/Filtered`);
   }
 
   public saveUser(user: UserModel) : Observable<UserModel[]> {
